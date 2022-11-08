@@ -8,7 +8,7 @@ import MenuList from "../../components/MenuList";
 import {useDispatch, useSelector} from "react-redux";
 import {loadBanners, loadCategories, loadMenus, loadSettings, loadStoreInfo} from "../../actions/store";
 
-function Home() {
+function Home({ storeId, categoryId }) {
   const router = useRouter();
   // const dispatch = useDispatch();
   const { storeInfo, settings, banners, categories, menus } = useSelector((state) => state.store)
@@ -20,7 +20,7 @@ function Home() {
   return (
     <DefaultLayout title>
       <Carousel list={storeInfo?.ad_list} />
-      <SlideMenu menu={categories}/>
+      <SlideMenu menu={categories} categoryId={categoryId} />
       <MenuList menus={menus} />
     </DefaultLayout>
   )
@@ -42,6 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   return {
     props: {
       storeId,
+      categoryId,
     }
   }
 })

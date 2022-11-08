@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styled from '@emotion/styled';
 
-
 const CarouselContainer = styled.div`
   width: 100%;
   aspect-ratio: 18/17;

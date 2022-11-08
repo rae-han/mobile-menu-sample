@@ -1,0 +1,17 @@
+node_modules
+node_modules/
+/node_modules
+/node_modules/
+./node_modules
+./node_modules/
+*/node_modules
+*/node_modules/
+**/node_modules
+**/node_modules/
+
+.next
+./.next
+*/.next
+**/.next
+
+.git/

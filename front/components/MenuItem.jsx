@@ -4,13 +4,21 @@ import Image from 'next/image'
 import {commaNumber} from "../filters/commaNumber";
 
 const MenuItemContainer = styled.div`
-  //flex-basis: 50%;
-  width: 50%;
+  flex-basis: 50%;
+  //width: 50%;
   padding: 3px;
+  
+  //&:not(:nth-of-type(1), :nth-of-type(2)) {
+  //  margin-top: 6px;
+  //}
 `;
 
 const MenuItemWrap = styled.div`
   background-color: var(--color-white);
+
+  &:active {
+    background-color: var(--color-f7f7f7);
+  }
 `;
 
 const ImageWrap = styled.div`

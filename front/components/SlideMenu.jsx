@@ -30,10 +30,10 @@ const SlideMenuContainer = styled.div`
   }
 `;
 
-function SlideMenu({ menu }) {
+function SlideMenu({ menu, categoryId }) {
   return (
     <SlideMenuContainer>
-      {menu.map((value) => <span className={cn('item', { active: true })} key={value.category_id}>{value.category_name}</span>)}
+      {menu.map((value) => <span className={cn('item', { active: value.category_id === categoryId })} key={value.category_id}>{value.category_name}</span>)}
     </SlideMenuContainer>
   )
 }

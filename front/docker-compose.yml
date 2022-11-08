@@ -1,0 +1,8 @@
+version: '3'
+services:
+  frontend:
+    build: .
+    environment:
+      - PORT=6700
+    ports:
+      - 6700:6700
