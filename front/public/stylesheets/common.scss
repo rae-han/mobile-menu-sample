@@ -1,0 +1,27 @@
+:root {
+  --max-limit: 1024px;
+  --color-main: #ff8b45;
+  --main-color_dark: #005ab3;
+  --red: #d0021b;
+  --color-black: black;
+  --color-212121: #212121;
+  --color-424242: #424242;
+  --color-666: #666;
+  --color-999: #999;
+  --color-brown-gray: #b3b3b3;
+  --color-e1e1e1: #e1e1e1;
+  --color-f2f2f2: #f2f2f2;
+  --color-f7f7f7: #f7f7f7;
+  --color-white: white;
+}
+
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+body, button {
+  font-family: 'NanumSquere', sans-serif;
+}
+
+.image {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
