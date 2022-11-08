@@ -1,6 +1,10 @@
 
 
 
+# front
+npm i
+
+
 ###
 ## backend
 ### web-back-dev (이미지 태그 네임)
