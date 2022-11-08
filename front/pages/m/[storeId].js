@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useRouter} from "next/router";
 import wrapper from "../../store/configureStore";
 import DefaultLayout from "../../layouts/DefaultLayout";
