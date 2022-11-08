@@ -9,6 +9,15 @@ npm i
 npm run build
 sudo pm2 start --name "front/menu-mobile" npm -- start
 
+# linux
+http://10.100.110.10:6500/
+http://10.100.110.10:6700/
+
+docker-compose build
+docker-compose up
+
+
+
 # AWS
 ### 테그
 TAG="mobile-front-dev"

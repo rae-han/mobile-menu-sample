@@ -1,6 +1,6 @@
 version: '3'
 services:
-  frontend:
+  mobile-order-frontend:
     build: .
     environment:
       - PORT=6700
