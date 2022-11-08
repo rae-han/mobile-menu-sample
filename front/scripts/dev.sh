@@ -10,7 +10,7 @@ ECR_IMAGE_TAG="$ECR_REPOSITORY:$TAG"
 #TASK_DEFINTION_NAME=elixirmenu-web-front-dev
 
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ECR_REPOSITORY
-#docker build -t $LOCAL_IMAGE .
+docker build -t $LOCAL_IMAGE .
 docker tag $LOCAL_IMAGE $ECR_IMAGE_TAG
 docker push $ECR_IMAGE_TAG
 
