@@ -18,6 +18,7 @@ app.use(cors({
 app.use(morgan('dev'));
 
 app.get('/back/health', (req, res, next) => res.status(200).json({ statusCode: 200, statusMessage: 'ok' }));
+app.get('/system/health', (req, res, next) => res.status(200).json({ statusCode: 200, statusMessage: 'ok' }));
 
 app.use(`/${PATHNAME}/:version`, apiRouter);
 
