@@ -60,6 +60,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   console.log('\x1b[31m#### /m/[storeId].js \x1b[0m')
   // const queryClient = new QueryClient();
   const { storeId } = params;
+  console.log(storeId);
 
   // await queryClient.prefetchQuery(['storeInfo', storeId], () => fetchStoreInfo(storeId));
   // await queryClient.prefetchQuery(['settings', storeId], () => fetchSettings(storeId))
