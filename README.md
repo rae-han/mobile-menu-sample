@@ -17,7 +17,6 @@ docker-compose build
 docker-compose up
 
 
-
 # AWS
 ### 테그
 TAG="mobile-front-dev"
@@ -44,6 +43,51 @@ docker push $ECR_IMAGE_TAG
 
 #aws ecs update-service --region "${REGION}" --cluster "${CLUSTER_NAME}" --service "${SERVICE_NAME}" --task-definition "${TASK_DEFINTION_NAME}" --force-new-deployment
 
+
+안녕하세요. 이번에 새로운 프로젝트를 시작하게 됐는데 테스트 서버를 미리 `Amazon ECS`에 서비스 된 상태로 할수 있을까요?? 예전에 제 실수로 배포 환경을 생각 못하고 수정한 적이 있어서 부탁드립니다.
+현재 리눅스에서 작동 확인 후 `docker-compose build -> up` 사용하여 다시 한번 더 확인했고 예전에 말씀해주신 `Amazon ECR`의 `elixir/menu` 레포지토리에 `mobile-back-dev`, `mobile-front-dev` 라는 이미지 이름으로 올려놨습니다.
+도메인 네임은 당장 연결할 필요 없이 제가 확인만 하면 될거 같은데 가능할까요??
+
+설정 값은 아래와 같습니다.
+
+- back(이미지 태그 네임: mobile-back-dev)
+```markdown
+# 포트번호
+- 6500
+
+# 라우팅 경로
+- /api
+
+# .env
+PORT=6500
+PATHNAME=api
+DEVELOP_API_URL=https://asp.test.elixir.codes/api/menuc
+TEST_API_URL=https://asp.test.elixir.codes/api/menuc
+PRODUCT_API_URL=https://asp.elixirpay.co.kr/api/menuc
+RELEASE_API_URL=https://asp.elixirpay.co.kr/api/menuc
+API_URL=https://asp.test.elixir.codes/api/menuc
+
+# health check
+/api/v1/system/health
+```
+
+-front(이미지 태그 네임: mobile-front-dev)
+```markdown
+# 포트번호
+- 6700
+
+# 라우팅 경로
+- /m
+
+# .env
+NEXT_PUBLIC_BACK_URL=http://10.100.110.10/:6500/api/v1
+## 위 주소는 [위 서버 주소]/api/v1 으로 해주시면 감사합니다.
+
+# health check
+/api/system/health
+```
+
+Amazon -> EC2 -> 로드 밸런싱 -> 로드밸런서 -> 선택(elixirmenu-lb) -> 리스터 -> https:443의 규칙
 
 ###
 ## backend
