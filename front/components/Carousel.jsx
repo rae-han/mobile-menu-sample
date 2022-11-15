@@ -1,59 +1,92 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styled from '@emotion/styled';
+import {addDragEvent} from "../uitils/dragEvent";
 
 const CarouselContainer = styled.div`
   width: 100%;
   aspect-ratio: 18/17;
   overflow: hidden;
   
-  .list {
+  .slider {
+    display: flex;
     width: 100%;
     height: 100%;
-    display: flex;
-    transition: margin-left .125s;
+    transition: transform .125s;
     
     .item {
-      flex: none;
+      flex-shrink: 0;
       width: 100%;
       height: 100%;
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
+      object-fit: cover;
     }
+    
+    
   }
 `;
 
-function Carousel({ list }) {
-  const [pointer, setPointer] = useState(0)
+function Carousel({ data }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [transX, setTransX] = useState(0);
+  const viewer = useRef();
 
-  useEffect(() => {
-    const length = list.length;
+  const onSlider = useCallback((deltaX) => {
+    console.dir(viewer.current.clientWidth)
+    const viewerWidth = viewer.current.clientWidth;
+    const moveWidth = parseInt(viewerWidth/4)
 
-    if(length === 1) {
-      return;
+    if (deltaX < -moveWidth) {
+      setCurrentIndex(prev => prev - 1)
+    } else if (deltaX > moveWidth) {
+      setCurrentIndex(prev => prev + 1)
     }
 
-    const walker = setInterval(() => {
-      setPointer(prev =>{
-        const next = prev + 1;
+    setTransX(0);
+  }, [viewer])
 
-        if (next >= length) {
-          return 0;
-        }
+  // useEffect(() => {
+  //   const dataLength = data?.length;
+  //
+  //   const autoSlider = setInterval(() => {
+  //     setCurrentIndex(prev =>{
+  //       const next = prev + 1;
+  //
+  //       if (next >= dataLength) {
+  //         return 0;
+  //       }
+  //
+  //       return next;
+  //     })
+  //   }, 4*1000)
+  //
+  //   return () => clearInterval(autoSlider);
+  // }, [data])
 
-        return next;
-      })
-    }, 4*1000);
+  useEffect(() => {
+    // addDragEvent();
+  }, [addDragEvent])
 
-    return () => clearInterval(walker)
-  }, [list])
 
   return (
     <CarouselContainer>
-      <div className="list" style={{ marginLeft: `-${pointer}00%`}}>
-        {list && list.map((item, index) => <div className="item" key={index} style={{backgroundImage: `url('${item.ad_img}')`}}></div>)}
-      </div>
+      <div
+        className="slider" style={{ transform: `translateX(calc(${currentIndex*100}% + ${transX}px))` }}
+        ref={viewer}
+        {...addDragEvent({
+          onDrag: (deltaX) => {
+            console.log(transX)
+            setTransX(deltaX)
 
+          },
+          onDragEnd: (deltaX) => {
+            console.log(deltaX)
+            onSlider(deltaX);
+          }
+        })}
+      >
+        {data.map((item, index) => (
+          <img className="item" key={index} src={item.ad_img} alt="carousel image" draggable={false} />
+        ))}
+      </div>
     </CarouselContainer>
   )
 }

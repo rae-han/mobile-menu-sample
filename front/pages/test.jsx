@@ -26,15 +26,15 @@ function Test() {
 
   return (
     <>
-      <button onClick={() => router.push(`/m/2EE81511`)}>move!</button>
-      {/*{ fakerData.current && fakerData.current.map((d) => (<div key={d.fakerKey}>{d.fakerKey}</div>))}*/}
-      {/*<Suspense fallback={(() => <p>loading</p>)()}>*/}
-        {fakerData.map((d, i) => (
-          <Suspense fallback={(() => <p>loading</p>)()}>
-            <TestComponent data={d} key={i}></TestComponent>
-          </Suspense>
-        ))}
-      {/*</Suspense>*/}
+      {/*<button onClick={() => router.push(`/m/2EE81511`)}>move!</button>*/}
+      {/*/!*{ fakerData.current && fakerData.current.map((d) => (<div key={d.fakerKey}>{d.fakerKey}</div>))}*!/*/}
+      {/*/!*<Suspense fallback={(() => <p>loading</p>)()}>*!/*/}
+      {/*  {fakerData.map((d, i) => (*/}
+      {/*    <Suspense fallback={(() => <p>loading</p>)()}>*/}
+      {/*      <TestComponent data={d} key={i}></TestComponent>*/}
+      {/*    </Suspense>*/}
+      {/*  ))}*/}
+      {/*/!*</Suspense>*!/*/}
     </>
   )
 }

@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import wrapper from "../../store/configureStore";
 import DefaultLayout from "../../layouts/DefaultLayout";
 import Carousel from "../../components/Carousel";
+import CarouselJS from "../../components/CarouselJS";
 import SlideMenu from "../../components/SlideMenu";
 import MenuList from "../../components/MenuList";
 import {useDispatch, useSelector} from "react-redux";
@@ -19,7 +20,8 @@ function Home({ storeId, categoryId }) {
 
   return (
     <DefaultLayout title>
-      <Carousel list={storeInfo?.ad_list} />
+      <Carousel data={storeInfo?.ad_list} />
+      {/*<CarouselJS list={storeInfo?.ad_list} />*/}
       <SlideMenu menu={categories} categoryId={categoryId} />
       <MenuList menus={menus} />
     </DefaultLayout>
