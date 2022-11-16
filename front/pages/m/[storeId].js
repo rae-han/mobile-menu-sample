@@ -2,8 +2,8 @@ import React from 'react';
 import {useRouter} from "next/router";
 import wrapper from "../../store/configureStore";
 import DefaultLayout from "../../layouts/DefaultLayout";
-import Carousel from "../../components/Carousel";
-import CarouselJS from "../../components/CarouselJS";
+import Carousel from "../../components/Carousel/Carousel";
+import InfiniteCarousel from "../../components/Carousel/InfiniteCarousel";
 import SlideMenu from "../../components/SlideMenu";
 import MenuList from "../../components/MenuList";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,8 +20,8 @@ function Home({ storeId, categoryId }) {
 
   return (
     <DefaultLayout title>
-      <Carousel data={storeInfo?.ad_list} />
-      {/*<CarouselJS list={storeInfo?.ad_list} />*/}
+      {/*<Carousel data={storeInfo?.ad_list} />*/}
+      <InfiniteCarousel data={storeInfo?.ad_list} />
       <SlideMenu menu={categories} categoryId={categoryId} />
       <MenuList menus={menus} />
     </DefaultLayout>
@@ -31,7 +31,6 @@ function Home({ storeId, categoryId }) {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({req, res, params, ...rest}) => {
   console.log('\x1b[31m#### /m/[storeId].js \x1b[0m')
   const { storeId } = params;
-  console.log(storeId);
 
   await store.dispatch(loadStoreInfo(storeId));
   await store.dispatch(loadSettings(storeId));

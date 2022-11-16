@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styled from '@emotion/styled';
-import {addDragEvent} from "../uitils/dragEvent";
+import {addDragEvent} from "../../uitils/dragEvent";
 
 const CarouselContainer = styled.div`
   width: 100%;
@@ -11,7 +11,7 @@ const CarouselContainer = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    transition: transform .125s;
+    transition: transform 125ms;
     
     .item {
       flex-shrink: 0;
@@ -27,51 +27,63 @@ const CarouselContainer = styled.div`
 function Carousel({ data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [transX, setTransX] = useState(0);
+  const [intervalId, setIntervalId] = useState(null)
   const viewer = useRef();
 
   const onSlider = useCallback((deltaX) => {
-    console.dir(viewer.current.clientWidth)
     const viewerWidth = viewer.current.clientWidth;
     const moveWidth = parseInt(viewerWidth/4)
 
     if (deltaX < -moveWidth) {
-      setCurrentIndex(prev => prev - 1)
-    } else if (deltaX > moveWidth) {
       setCurrentIndex(prev => prev + 1)
+    } else if (deltaX > moveWidth) {
+      setCurrentIndex(prev => prev - 1)
     }
-
     setTransX(0);
   }, [viewer])
 
-  // useEffect(() => {
-  //   const dataLength = data?.length;
-  //
-  //   const autoSlider = setInterval(() => {
-  //     setCurrentIndex(prev =>{
-  //       const next = prev + 1;
-  //
-  //       if (next >= dataLength) {
-  //         return 0;
-  //       }
-  //
-  //       return next;
-  //     })
-  //   }, 4*1000)
-  //
-  //   return () => clearInterval(autoSlider);
-  // }, [data])
+  const startInterval = useCallback(() => {
+    const id = setInterval(() => {
+      setCurrentIndex(prev => {
+        if (prev >= data.length - 1) {
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 1_000)
+
+    console.log('set interval id', id)
+
+    setIntervalId(id);
+
+    return id;
+  }, [currentIndex])
+
+  const endInterval = useCallback(() => {
+    console.log('intervalId', intervalId)
+    clearInterval(intervalId);
+  }, [intervalId])
 
   useEffect(() => {
-    // addDragEvent();
-  }, [addDragEvent])
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+
+    const id = startInterval();
+
+    return () => clearInterval(id);
+  }, [data])
 
 
   return (
     <CarouselContainer>
       <div
-        className="slider" style={{ transform: `translateX(calc(${currentIndex*100}% + ${transX}px))` }}
+        className="slider" style={{ transform: `translateX(calc(${-currentIndex*100}% + ${transX}px))` }}
         ref={viewer}
         {...addDragEvent({
+          onDragStart: () => {
+            endInterval();
+          },
           onDrag: (deltaX) => {
             console.log(transX)
             setTransX(deltaX)
@@ -80,6 +92,7 @@ function Carousel({ data }) {
           onDragEnd: (deltaX) => {
             console.log(deltaX)
             onSlider(deltaX);
+            startInterval();
           }
         })}
       >
