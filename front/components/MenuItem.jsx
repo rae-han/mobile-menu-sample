@@ -17,7 +17,8 @@ const MenuItemWrap = styled.div`
   background-color: var(--color-white);
 
   &:active {
-    background-color: var(--color-f7f7f7);
+    //background-color: var(--color-f7f7f7);
+    opacity: .75;
   }
 `;
 
@@ -28,6 +29,7 @@ const ImageWrap = styled.div`
   .image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 `;
 
@@ -71,7 +73,7 @@ function MenuItem({ menu }) {
     <MenuItemContainer>
       <MenuItemWrap>
         <ImageWrap>
-          <div className="image" style={{ backgroundImage: `url("${menu.menu_img}")`}}></div>
+          <img className="image" src={menu.menu_img} alt="menu image" />
         </ImageWrap>
         <VerticalLine />
         <TextWrap>

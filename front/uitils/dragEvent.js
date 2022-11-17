@@ -14,6 +14,7 @@ export function addDragEvent({
   if (isTouchScreen) {
     return {
       onTouchStart: (touchEvent) => {
+        console.log(touchEvent.target)
         console.log('touchEvent')
         if (stopPropagation) {
           touchEvent.stopPropagation(); // click 이벤트 전파 방지

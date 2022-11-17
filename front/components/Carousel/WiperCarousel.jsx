@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
 import styled from '@emotion/styled';
 import {addDragEvent} from "../../uitils/dragEvent";
+import {current} from "@reduxjs/toolkit";
 
 const CarouselContainer = styled.div`
   width: 100%;
@@ -19,14 +20,9 @@ const CarouselContainer = styled.div`
       flex-shrink: 0;
       width: 100%;
       height: 100%;
-
-      .image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
       
-      .text {
+      .item-wrap {
+        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: flex-end;
@@ -36,9 +32,39 @@ const CarouselContainer = styled.div`
         right: 0;
         bottom: 0;
         left: 0;
-        font-size: 192px;
-        font-weight: bold;
-        color: red;
+
+        .image {
+          z-index: 10;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .text {
+          z-index: 100;
+          
+          .header {
+            font-size: 192px;
+            font-weight: bolder;
+            color: red;
+          }
+          .p {
+            font-size:48px;
+            color: blue;
+          }
+          
+          //animation: 1s linear 0s infinite alternate scale_up_text;
+        }
+        
+        @keyframes scale_up_text {
+          from { 
+            transform: sacle(50%); 
+          }
+          to {
+            transform: scale(400%);  
+          }
+        }
       }
     }
   }
@@ -55,7 +81,7 @@ function InfiniteCarousel({ data }) {
 
   const sliderStyles = useMemo(() => ({
     transform: `translateX(calc(${-currentIndex*100}% + ${transX}px))`,
-    transition: `transform ease-in-out ${animate ? 125 : 0}ms 0s`,
+    transition: `transform ease-in-out ${animate ? 250 : 0}ms 0s`,
   }), [currentIndex, transX, animate])
 
   // # 인덱스를 바꿔주는 함수
@@ -89,7 +115,7 @@ function InfiniteCarousel({ data }) {
     setIntervalId(id)
 
     return id;
-  }, [slides, currentIndex])
+  }, [slides, currentIndex, time])
 
   const endInterval = useCallback(() => {
     clearInterval(intervalId);
@@ -115,6 +141,10 @@ function InfiniteCarousel({ data }) {
     return () => clearInterval(id);
   }, [])
 
+  useEffect(() => {
+    console.log(currentIndex);
+  }, [currentIndex])
+
   return (
     <CarouselContainer>
       <div
@@ -122,7 +152,7 @@ function InfiniteCarousel({ data }) {
         className="slider"
         style={{
           transform: `translateX(calc(${-currentIndex*100}% + ${transX}px))`,
-          transition: `transform ease-in-out ${animate ? 250 : 0}ms 0s`,
+          transition: `transform ease-in-out ${animate ? time.current/2 : 0}ms 0s`,
         }}
         ref={viewer}
         {...addDragEvent({
@@ -142,8 +172,22 @@ function InfiniteCarousel({ data }) {
       >
         {slides.map((item, index) => (
           <div  className="item" key={index}>
-            <img className="image" src={item.ad_img} alt="carousel image" draggable={false} />
-            <div className="text">{index}</div>
+            <div className="item-wrap">
+              <img
+                className="image"
+                src={item.ad_img}
+                alt="carousel image"
+                draggable={false}
+                style={{
+                  transform: `translateX(calc(${(currentIndex-index)*100}% - ${transX}px))`,
+                  transition: `transform ease-in-out ${animate ? time.current/2 : 0}ms 0s`,
+                }}
+              />
+              <div className="text">
+                <h1 className="header">{index}</h1>
+                <span className="p">index</span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
