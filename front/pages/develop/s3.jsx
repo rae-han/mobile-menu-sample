@@ -8,21 +8,29 @@ function s3 () {
   const dispatch = useDispatch();
 
   const file = useRef()
-  const onChange = useCallback(() => {
+  const onChange = useCallback((e) => {
     console.log(file.current?.files[0])
     const inputFile = file.current?.files[0]
-    dispatch(uploadFile(inputFile))
+    dispatch(uploadFile({
+      file: inputFile,
+      options: { resize: true, grey: true },
+      resizeConfig: { width: 200 },
+    }))
   }, [file])
 
   return (
-    <form>
-      <input
-        type="file"
-        placeholder="file"
-        onChange={onChange}
-        ref={file}
-      />
-    </form>
+    <>
+      <form onSubmit={(e) => {e.preventDefault()}}>
+        <input
+          type="file"
+          placeholder="file"
+          onChange={onChange}
+          ref={file}
+        />
+        <button onClick={onChange}>보내기</button>
+      </form>
+      <img src={`https://raehan-test.s3.ap-northeast-2.amazonaws.com/1669002497478.png`} alt="image"/>
+    </>
   )
 }
 

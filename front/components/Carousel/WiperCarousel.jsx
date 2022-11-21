@@ -152,7 +152,7 @@ function InfiniteCarousel({ data }) {
         className="slider"
         style={{
           transform: `translateX(calc(${-currentIndex*100}% + ${transX}px))`,
-          transition: `transform ease-in-out ${animate ? time.current/2 : 0}ms 0s`,
+          transition: `transform ease-in-out ${animate ? time.current/4 : 0}ms 0s`,
         }}
         ref={viewer}
         {...addDragEvent({
@@ -180,7 +180,7 @@ function InfiniteCarousel({ data }) {
                 draggable={false}
                 style={{
                   transform: `translateX(calc(${(currentIndex-index)*100}% - ${transX}px))`,
-                  transition: `transform ease-in-out ${animate ? time.current/2 : 0}ms 0s`,
+                  transition: `transform ease-in-out ${animate ? time.current/4 : 0}ms 0s`,
                 }}
               />
               <div className="text">
