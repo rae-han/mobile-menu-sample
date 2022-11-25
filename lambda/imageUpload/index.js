@@ -11,13 +11,13 @@ exports.handler = async (event, context, callback) => {
     const body = event.body;
     console.log('body', body);
 
-    const bodyBuffer = Buffer.from(body.toString(), "base64")
-
+    const bodyBuffer = Buffer.from(body, "base64").toString("utf8")
+    const boundary = event.headers["Content-Type"]
 
     // TODO implement
     const response = {
         statusCode: 200,
-        body: JSON.stringify(bodyBuffer),
+        body: JSON.parse(JSON.stringify(boundary)),
     };
     return response;
 };
