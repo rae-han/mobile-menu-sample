@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.1262.0",
     "lambda-multipart-parser": "^1.0.1",
     "sharp": "^0.31.2"
   }
