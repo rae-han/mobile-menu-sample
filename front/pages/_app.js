@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { QueryClient, QueryClientProvider} from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import wrapper from '../store/configureStore'
+import GlobalContextProvider from "../utils/contexts/GlobalProvider";
 
 import '../public/stylesheets/reset.scss'
 import '../public/stylesheets/normalize.scss'
@@ -25,10 +26,12 @@ const App = ({ Component, pageProps }) => {
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <title>Menu-mobile</title>
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools></ReactQueryDevtools>
-        <Component {...pageProps}/>
-      </QueryClientProvider>
+      <GlobalContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools></ReactQueryDevtools>
+          <Component {...pageProps}/>
+        </QueryClientProvider>
+      </GlobalContextProvider>
     </>
   )
 }

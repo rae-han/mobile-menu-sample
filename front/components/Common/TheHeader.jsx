@@ -1,10 +1,11 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import Image from 'next/image'
 import styled from '@emotion/styled'
 
 import hamburger from '../../public/images/controls-buttons-nav-more-style-1-nor.svg'
 import cart from '../../public/images/controls-buttons-nav-cart-style-1-nor.svg'
 import SideMenu from "./SideMenu";
+import {GlobalContext} from "../../utils/contexts/GlobalProvider";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -88,8 +89,8 @@ const SideMenuWindow = styled.div`
 `;
 
 function Header() {
-  const [isSideMenu, setIsSideMenu] = useState(false)
   const menuBack = useRef();
+  const {isSideMenu, setIsSideMenu} = useContext(GlobalContext);
 
   const onClickBackground = useCallback((e) => {
     if (e.target === menuBack.current) {
@@ -107,7 +108,7 @@ function Header() {
           height={45}
           onClick={() => setIsSideMenu(prev => !prev)}
         ></Image>
-        <SideMenu show={isSideMenu} onToggle={setIsSideMenu}></SideMenu>
+        <SideMenu></SideMenu>
         <TitleLeft>왼쪽 제목</TitleLeft>
       </div>
       <TitleCenter>중앙 제목</TitleCenter>

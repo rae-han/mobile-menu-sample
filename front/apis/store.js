@@ -1,11 +1,17 @@
 import axios from 'axios';
 import { backUrl } from "../config/config";
 
+const instance = axios.create({
+  baseURL: backUrl,
+  timeout: 1000,
+})
+
 const [GET, POST] = ['GET', 'POST']
 
 axios.defaults.baseURL = backUrl;
 
 export function fetchStoreInfo(data) {
+  console.log(123123123, axios.defaults.baseURL)
   const options = {
     method: GET,
     url: `/store/${data}`
@@ -38,9 +44,6 @@ export function fetchBanners(data) {
 }
 
 export function fetchCategories(data) {
-  // if(!data) {
-  //   return;
-  // }
   const options = {
     method: GET,
     url: `/store/${data}/categories`

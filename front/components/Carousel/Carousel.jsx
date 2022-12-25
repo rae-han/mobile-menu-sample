@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styled from '@emotion/styled';
-import {addDragEvent} from "../../uitils/dragEvent";
+import {addDragEvent} from "../../utils/dragEvent";
 
 const CarouselContainer = styled.div`
   width: 100%;

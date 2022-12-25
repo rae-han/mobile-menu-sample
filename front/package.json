@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev -p 6700",
+    "dev": "NODE_ENV=develop next dev -p 6700",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx next build",
     "start": "NODE_ENV=production next start -p 6700"

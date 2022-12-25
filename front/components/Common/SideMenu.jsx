@@ -1,9 +1,10 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState, useContext} from 'react';
 import Image from 'next/image'
 import styled from '@emotion/styled'
 
 import sideMenuOrder from '../../public/images/side-menu-order.svg';
 import sideMenuHistory from '../../public/images/side-menu-history.svg';
+import {GlobalContext} from "../../utils/contexts/GlobalProvider";
 
 const SideMenuContainer = styled.div`
   visibility: ${props => props.show ? 'visible' : 'hidden'};
@@ -76,6 +77,7 @@ function SideMenu({ show, onToggle }) {
     { id: 0, title: '주문하기', img: sideMenuOrder, onClick: () => test()},
     { id: 1, title: '주문내역 조회', img: sideMenuHistory, onClick: () => test()},
   ]);
+  const {isSideMenu, setIsSideMenu} = useContext(GlobalContext);
 
   const test = useCallback(() => {
     alert('조금만 기다려주세요.')
@@ -83,14 +85,14 @@ function SideMenu({ show, onToggle }) {
 
   const onClickBackground = useCallback((e) => {
     if (e.target === menuBack.current) {
-      onToggle(false)
+      setIsSideMenu(false)
     }
   }, [])
 
   return (
-    <SideMenuContainer show={show}>
-      <SideMenuBackground show={show} ref={menuBack} onClick={onClickBackground}/>
-      <SideMenuWindow show={show}>
+    <SideMenuContainer show={isSideMenu}>
+      <SideMenuBackground show={isSideMenu} ref={menuBack} onClick={onClickBackground}/>
+      <SideMenuWindow show={isSideMenu}>
         {sideMenus.current.map((item) => (
           <SideMenuItemWrap key={item.id} onClick={item.onClick}>
             <div className="side-menu-item">

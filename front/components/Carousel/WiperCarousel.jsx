@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
 import styled from '@emotion/styled';
-import {addDragEvent} from "../../uitils/dragEvent";
+import {addDragEvent} from "../../utils/dragEvent";
 import {current} from "@reduxjs/toolkit";
 
 const CarouselContainer = styled.div`
